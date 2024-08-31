@@ -1,0 +1,73 @@
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 90px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav li {
+    margin-left: 20px;
+}
+
+.navbar-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar-nav a:hover {
+    color: #ccc;
+}
+
+.navbar-nav .signup-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.navbar-nav .signup-btn:hover {
+    background-color: #0056b3;
+}
+
+/* IMAGE A COTE DU TEXTE*/
+.cloudus-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.img-cloud {
+    height: 80px;
+    margin-right: 10px;
+}
+
+.cloudus-link span {
+    font-size: 26px;
+    color: #000;
+}
