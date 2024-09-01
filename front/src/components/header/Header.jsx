@@ -17,7 +17,7 @@ const Header = () => {
                     <li><a href="#">Pourquoi nous choisir ?</a></li>
                     <li><a href="#">Nos produits</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="#" className="signup-btn">S'inscrire</a></li>
+                    <li><Link to="/signup"  className="signup-btn">S'inscrire</Link></li>
                 </ul>
             </nav>
         </header>
