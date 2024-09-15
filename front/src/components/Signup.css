@@ -1,11 +1,12 @@
 /********** Div form génral **********/
 .form-container {
-    width: 400px;
+    width: 600px;
     margin: 50px auto;
     padding: 30px;
     border-radius: 15px;
     background: linear-gradient(135deg, #1e3a60, #274472); 
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    transition: width 0.3s ease, height 0.3s ease; 
 }
 
 h2 {
@@ -51,6 +52,7 @@ h2 {
     margin-bottom: 10px;
     text-align: center;
 }
+
 
 /********** Bouton et changement de couleur **********/
 .submit-button {

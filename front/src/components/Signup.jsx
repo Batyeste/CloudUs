@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./Signup.css";
-import alreadyAcc from './alreadyAcc';
+import { useNavigate } from 'react-router-dom'; 
+import PricingCard from './CardPrice/PricingCard';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ const SignUp = () => {
         adressePostaleSoce: '',
         siret: '',
         verifCode: '',
+        prix: '',
+        stockage: '',
         tituleCB: '',
         paymentMethod: '',
         cardNumber: '',
@@ -24,15 +27,16 @@ const SignUp = () => {
     });
 
     const [step, setStep] = useState(1);
-    const [error, setError] = useState('')
-    const [siretError, setSiretError] = useState('')
+    const [error, setError] = useState('');
+    const [siretError, setSiretError] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        //-- si le champ est siret
+        //-- Si le champ est SIRET
         if (name === 'siret') {
-            //-- Si le SIRET contient autre chose que des chiffres, erreur
+            //-- Vérification du format du SIRET
             if (!/^\d*$/.test(value)) {
                 setSiretError('Le SIRET doit contenir uniquement des chiffres');
             } else if (value.length > 14) {
@@ -44,7 +48,7 @@ const SignUp = () => {
             }
         }
 
-        //-- partie numéro de carte valide
+        //-- Vérification du numéro de carte
         if (name === "cardNumber" && value.length <= 16 && /^\d*$/.test(value)) {
             setFormData({
                 ...formData,
@@ -52,7 +56,7 @@ const SignUp = () => {
             });
         }
 
-        //-- partie CVV valide
+        //-- Vérification du CVV
         if (name === "cvv" && value.length <= 4 && /^\d*$/.test(value)) {
             setFormData({
                 ...formData,
@@ -60,7 +64,7 @@ const SignUp = () => {
             });
         }
 
-        if (name !== "cardNumber" && name !== "cvv" ) {
+        if (name !== "cardNumber" && name !== "cvv") {
             setFormData({
                 ...formData,
                 [name]: value
@@ -68,7 +72,11 @@ const SignUp = () => {
         }
     };
 
-    //-- Validation des étapes - Etape 1 du formulaire
+    const handleCardClick = (price, storage) => {
+        setFormData(prevFormData => ({ ...prevFormData, prix: price, stockage: storage }));
+    };
+
+    //-- Validation des étapes - Etape 1
     const validateStep1 = () => {
         if (!formData.nom || !formData.prenom || !formData.email || !formData.adressePostale || !formData.tel || !formData.password || !formData.confirmPassword) {
             setError("Tous les champs sont obligatoires à l'étape 1.");
@@ -81,7 +89,7 @@ const SignUp = () => {
         return true;
     };
 
-    //-- Validation des étapes - Etape 2 du formulaire
+    //-- Validation des étapes - Etape 2
     const validateStep2 = () => {
         if (!formData.nomSoce || !formData.adressePostaleSoce || !formData.siret) {
             setError("Tous les champs sont obligatoires lors de cette étape !");
@@ -94,7 +102,7 @@ const SignUp = () => {
         return true;
     };
 
-    //-- Validation des étapes - Etape 3 du formulaire
+    //-- Validation des étapes - Etape 3
     const validateStep3 = () => {
         if (!formData.verifCode) {
             setError("Le code de vérification est requis !");
@@ -103,8 +111,8 @@ const SignUp = () => {
         return true;
     };
 
-    //-- Validation des étapes - Etape 4 du formulaire
-    const validateStep4 = () => {
+    //-- Validation des étapes - Etape 5
+    const validateStep5 = () => {
         if (!formData.tituleCB || !formData.paymentMethod || !formData.cardNumber || !formData.expiryMonth || !formData.expiryYear || !formData.cvv) {
             setError("Tous les champs sont obligatoires lors de cette étape !");
             return false;
@@ -120,29 +128,30 @@ const SignUp = () => {
         return true;
     };
 
-//-- A faire : 
-//-- Si la deuxième étape est valide, envoyer un mail de vérification à l'adresse e-mail fournie
-//-- Donc créer un script qui envoie un mail de vérif avec un code aléatoire qui sera retourner par la fonction et qui sera comparé avec celui écrit
-
-//-- Mettre à l'étape 4 un choix d'abonnement (genre 3 cartes, 9,99, 14,99 et 50,99 euros par mois) et espace de stockage (10, 50, 100 Go)
     const handleSubmit = (e) => {
         e.preventDefault();
         setError('');
 
-        //-- vérif pour l'étape 1
-        //-- Validation des étapes
+        //-- Vérification des étapes
         if (step === 1 && validateStep1()) {
-            setStep(2); //-- Passe à l'étape 2 si valide
+            setStep(2);
         } else if (step === 2 && validateStep2()) {
-            setStep(3); //-- Passe à l'étape 3 si valide
+            setStep(3);
         } else if (step === 3 && validateStep3()) {
-            setStep(4); //-- Passe à l'étape 4 si valide
-        } else if (step === 4 && validateStep4()) {
-            console.log('Form Data:', formData);
+            setStep(4);
+        } else if (step === 4 ) {
+            setStep(5);
+        } else if (step === 5 && validateStep5()) {
+            //-- Redirection vers la page de facture si tout est valide
+            navigate('/pdf', { state: { formData } });
+            console.log(formData);
         } else {
             console.log('Error:', error);
         }
     };
+    const formule1 = { prix: '10', stockage: '10', raison1: 'Support standard', raison2: '1Go de transfert' };
+    const formule2 = { prix: '50', stockage: '50', raison1: 'Support prioritaire', raison2: '10Go de transfert'  };
+    const formule3 = { prix: '100', stockage: '100', raison1: 'Support 7/7', raison2: '50Go de transfert'  };
 
     const handlePrevious = () => {
         // si supérieur à l'étape 1
@@ -219,6 +228,38 @@ const SignUp = () => {
 
                 {step === 4 && (
                     <div>
+                        <div className="pricing-container">
+                        <PricingCard
+                            title="Standard"
+                            price={formule1.prix}
+                            storage={formule1.stockage}
+                            raison1={formule1.raison1}
+                            raison2={formule1.raison2}
+                            onClick={() => handleCardClick(formule1.prix, formule1.stockage)}
+                        />
+                        <PricingCard
+                            title="Premium"
+                            price={formule2.prix}
+                            storage={formule2.stockage}
+                            raison1={formule2.raison1}
+                            raison2={formule2.raison2}
+                            onClick={() => handleCardClick(formule2.prix, formule2.stockage)}
+                        />    
+                            <PricingCard
+                            title="Pro"
+                            price={formule3.prix}
+                            storage={formule3.stockage}
+                            raison1={formule3.raison1}
+                            raison2={formule3.raison2}
+                            onClick={() => handleCardClick(formule3.prix, formule3.stockage)}
+                            />
+                        </div>
+                        {error && <p className="error-message">{error}</p>}
+                    </div>
+                )}
+                
+                {step === 5 && (
+                    <div>
                         <div className="form-group">
                             <label htmlFor="tituleCB">Titulaire carte</label>
                             <input type="text" id="tituleCB" name="tituleCB" value={formData.tituleCB} onChange={handleChange} />
@@ -272,9 +313,9 @@ const SignUp = () => {
 
                 <div className="form-navigation">
                     {step > 1 && <button type="button" className="submit-button" onClick={handlePrevious}>Précédent</button>}
-                    <button type="submit" className="submit-button">
+                    {step !== 4 && <button type="submit" className="submit-button">
                         {step === 4 ? "S'inscrire" : "Suivant"}
-                    </button>
+                    </button>}
                 </div>
             </form>
             {/* <div>
