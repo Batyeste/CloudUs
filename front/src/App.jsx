@@ -5,7 +5,9 @@ import Footer from './components/footer/Footer.jsx';
 import Accueil from './components/Accueil.jsx';
 import Signup from './components/Signup.jsx';
 import alreadyAcc from './components/alreadyAcc.jsx';
-import FacturePDF from './components/FacturePDF.jsx'; 
+import FacturePDF from './components/FacturePDF.jsx';
+import Login from './components/Login.jsx';
+
 
 import './App.css';
 import Button from 'react-bootstrap/Button';
@@ -20,9 +22,9 @@ function App() {
         <Route path="/accueil" element={<Accueil />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/pdf" element={<FacturePDF />} /> 
+        <Route path="/login" element={<Login />} />
 
         {/* <Route path="/produits" element={<Produits />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} /> */}
       </Routes>
       <Footer />
