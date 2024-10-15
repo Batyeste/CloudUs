@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "./Signup.css";
 import { useNavigate } from 'react-router-dom'; 
 import PricingCard from './CardPrice/PricingCard';
+import VerificationCode  from './codeVerif/codeVerif';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const SignUp = () => {
     const [step, setStep] = useState(1);
     const [error, setError] = useState('');
     const [siretError, setSiretError] = useState('');
+    const [generatedCode, setGeneratedCode] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -106,6 +108,10 @@ const SignUp = () => {
     const validateStep3 = () => {
         if (!formData.verifCode) {
             setError("Le code de vérification est requis !");
+            return false;
+        }
+        if (formData.verifCode !== generatedCode) {
+            setError("Le code de vérification est incorrect !");
             return false;
         }
         return true;
@@ -218,11 +224,12 @@ const SignUp = () => {
 
                 {step === 3 && (
                     <div>
-                        <div className="form-group">
-                            <label htmlFor="verifCode">Code de vérification</label>
-                            <input 
-                                type="text" id="verifCode" name="verifCode" value={formData.verifCode} onChange={handleChange} />
-                        </div>
+                        <VerificationCode
+                            formData={formData}
+                            handleChange={handleChange}
+                            setGeneratedCode={setGeneratedCode}
+                        />
+                        {error && <p className="error-message">{error}</p>}
                     </div>
                 )}
 
@@ -318,9 +325,10 @@ const SignUp = () => {
                     </button>}
                 </div>
             </form>
-            {/* <div>
-                <alreadyAcc />
-            </div> */}
+            <div className="connexion-container">
+                <p className='connexion-text'>Vous avez déjà un compte ?</p>
+                <a href="/login" className="connexion-link">Connectez-vous</a>
+            </div>
         </div>
     );
 };

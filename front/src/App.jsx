@@ -4,7 +4,6 @@ import Header from './components/header/Header.jsx';
 import Footer from './components/footer/Footer.jsx';
 import Accueil from './components/Accueil.jsx';
 import Signup from './components/Signup.jsx';
-import alreadyAcc from './components/alreadyAcc.jsx';
 import FacturePDF from './components/FacturePDF.jsx';
 import Login from './components/Login.jsx';
 
