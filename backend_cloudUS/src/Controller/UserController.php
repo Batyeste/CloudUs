@@ -55,6 +55,17 @@ public function buyStorage(Request $request): JsonResponse
         'client_name' => $user->getNom() . ' ' . $user->getPrenom(),
         'client_address' => $user->getAdresse(),
         'total_amount' => 20.00,
+        // Détails de l'achat
+    'description' => 'Achat d\'espace de stockage supplémentaire',
+    'unit_price' => 20.00,    // Prix unitaire hors taxe
+    'quantity' => 1,          // Quantité achetée
+
+    // Montants calculés
+    'total_ht' => 20.00,      // Total hors taxe
+    'tva_rate' => 0.20,       // Taux de TVA (20%)
+    'tva_amount' => 20.00 * 0.20,  // Montant de la TVA
+    'total_ttc' => 20.00 * 1.20    // Montant total toutes taxes comprises
+
     ];
     
     $invoiceService = new InvoiceService();

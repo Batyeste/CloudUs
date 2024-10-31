@@ -26,6 +26,34 @@ class FileRepository extends ServiceEntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
+
+    public function getTotalStorageUsed(): int
+    {
+        return $this->createQueryBuilder('f')
+            ->select('SUM(f.fileSize)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countUploadedSince(\DateTime $date): int
+    {
+        return $this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->where('f.uploadDate >= :date')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countFilesByFormat(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.format, COUNT(f.id) AS count')
+            ->groupBy('f.format')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function countFilesByUser(): array
     {
         $qb = $this->createQueryBuilder('f')
@@ -63,6 +91,7 @@ class FileRepository extends ServiceEntityRepository
     foreach ($orderBy as $field => $order) {
         $qb->addOrderBy('f.' . $field, $order);
     }
+
 
     return $qb->getQuery()->getResult();
 }

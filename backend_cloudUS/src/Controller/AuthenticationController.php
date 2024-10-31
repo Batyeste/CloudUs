@@ -91,6 +91,57 @@ class AuthenticationController extends AbstractController
         ]);
     }
 
+
+    #[Route('/api/register/admin', name: 'admin_register', methods: ['POST'])]
+    public function registerAdmin(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): JsonResponse
+    {
+       
+        $data = json_decode($request->getContent(), true);
+
+        if ($data === null) {
+            return new JsonResponse(['error' => 'Invalid JSON'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
+        // Accéder aux données du JSON
+        $email = $data['username'];
+        $password = $data['password'];
+        $nom = $data['nom'];
+        $prenom = $data['prenom'];
+        $adresse = $data['adresse'];
+        $date = new \DateTimeImmutable();
+
+
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPrenom($prenom);
+        $user->setNom($nom);
+        $user->setAdresse($adresse);
+        $user->setCreateAt($date);
+        $user->setRoles(["ROLE_ADMIN"]);
+        $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                $user,
+                $password
+            )
+        );
+        $user->setTotalStorage(20 * 1024 * 1024);
+        $user->setUserStorage(0);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+
+
+        // Traiter les données ici
+        // Par exemple, vous pouvez les sauvegarder en base de données
+        $this->sendConfirmationEmail($user);
+        // Retourner une réponse JSON
+        return new JsonResponse([
+            'status' => 'Inscription effectuée',
+        ]);
+    }
+    
+
     private function sendConfirmationEmail(User $user): void
     {
         $subject = "Comformation Inscription";
