@@ -119,19 +119,3 @@ Envoyez les informations de connexion dans le corps de la requête pour obtenir 
 ## Gestion des Factures
 
 Lors de l’achat d’espace supplémentaire, une facture en PDF est générée et envoyée par e-mail à l’utilisateur et à l'administrateur.
-
-### Configuration des E-mails
-
-Le service d'email nécessite une configuration SMTP. Dans le fichier `.env`, mettez à jour la configuration `MAILER_DSN` en fonction de votre fournisseur de messagerie.
-
-```dotenv
-MAILER_DSN=smtp://user:pass@smtp.mailtrap.io:2525
-```
-
-## Exécution des Tests
-
-Pour exécuter les tests de l’API, utilisez la commande suivante :
-
-```bash
-php bin/phpunit
-```
