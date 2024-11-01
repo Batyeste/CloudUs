@@ -7,13 +7,13 @@ Cette API permet aux utilisateurs de gérer leurs fichiers et leur espace de sto
 - **PHP** >= 8.0
 - **Symfony** >= 6.0
 - **Composer**
-- **MySQL** (ou un autre système de gestion de base de données compatible)
+- **MySQL** 
 
 ## Installation
 
 1. **Clonez le repository :**
     ```bash
-    git clone https://github.com/votre-utilisateur/nom-du-repository.git
+    git clone https://github.com/Batyeste/CloudUs.git
     cd nom-du-repository
     ```
 
@@ -135,9 +135,3 @@ Pour exécuter les tests de l’API, utilisez la commande suivante :
 ```bash
 php bin/phpunit
 ```
-
-## Contributions
-
-Les contributions sont les bienvenues ! Veuillez ouvrir une pull request pour proposer vos modifications.
-
-## Licence
