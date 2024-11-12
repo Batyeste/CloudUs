@@ -4,7 +4,7 @@ Cette API permet aux utilisateurs de gérer leurs fichiers et leur espace de sto
 
 ## Prérequis
 
-- **PHP** >= 8.0
+- **PHP** >= 8.2
 - **Symfony** >= 6.0
 - **Composer**
 - **MySQL** 
