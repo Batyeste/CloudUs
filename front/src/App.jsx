@@ -6,7 +6,7 @@ import Accueil from './components/Accueil.jsx';
 import Signup from './components/Signup.jsx';
 import FacturePDF from './components/FacturePDF.jsx';
 import Login from './components/Login.jsx';
-
+import Page404 from './components/page404/Page404.jsx';
 
 import './App.css';
 import Button from 'react-bootstrap/Button';
@@ -22,6 +22,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/pdf" element={<FacturePDF />} /> 
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Page404 />} />
 
         {/* <Route path="/produits" element={<Produits />} />
         <Route path="/contact" element={<Contact />} /> */}
