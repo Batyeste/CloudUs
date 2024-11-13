@@ -3,8 +3,10 @@ import './Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faCloud } from '@fortawesome/free-solid-svg-icons';
 
+import { loginUser } from '../functions/CallApi/callLogin';
+
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [username, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
@@ -12,10 +14,15 @@ const Login = () => {
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const toggleShowPassword = () => setShowPassword(!showPassword);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
+        // console.log('Email:', username);
+        // console.log('Password:', password);
+        const response = await loginUser({ username, password });
+        // console.log('response', response);
+        if (response.success) {
+            console.log('Connexion réussie');
+        } 
     };
 
     return (
@@ -29,7 +36,7 @@ const Login = () => {
                 <input
                     type="email"
                     id="email"
-                    value={email}
+                    value={username}
                     onChange={handleEmailChange}
                     required
                 />

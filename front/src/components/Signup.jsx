@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import PricingCard from './CardPrice/PricingCard';
 import VerificationCode  from './codeVerif/codeVerif';
 
+import { submitRegistration } from '../functions/CallApi/callRegister';
+
 const SignUp = () => {
     const [formData, setFormData] = useState({
         nom: '',
@@ -134,7 +136,7 @@ const SignUp = () => {
         return true;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
@@ -148,12 +150,19 @@ const SignUp = () => {
         } else if (step === 4 ) {
             setStep(5);
         } else if (step === 5 && validateStep5()) {
-            //-- Redirection vers la page de facture si tout est valide
-            navigate('/pdf', { state: { formData } });
-            console.log(formData);
+            //-- Appel de la fonction submitRegistration
+            const response = await submitRegistration(formData);
+            if (response.success) {
+                //-- Redirection vers la page de facture si tout est valide
+                navigate('/pdf', { state: { formData } });
+            } else {
+                setError(response.data.error || 'Une erreur est survenue lors de l\'inscription.');
+            }
         } else {
             console.log('Error:', error);
         }
+
+
     };
     const formule1 = { prix: '10', stockage: '10', raison1: 'Support standard', raison2: '1Go de transfert' };
     const formule2 = { prix: '50', stockage: '50', raison1: 'Support prioritaire', raison2: '10Go de transfert'  };
