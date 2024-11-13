@@ -10,7 +10,7 @@ const Header = () => {
                 <nav className="navbar navbar-expand-lg">
                     <div className="navbar-brand">
                         <Link to={"/accueil"} className="cloudus-link">
-                            <img src="/cloudUs.png" alt="CloudUs Logo" className="img-cloud" />
+                            <img src="/img/cloudUs.png" alt="CloudUs Logo" className="img-cloud" />
                             <span>CloudUs</span>
                         </Link>
                     </div>
