@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
+import { registerCode } from '../../functions/CallApi/callCode';
 
 const VerificationCode = ({ formData, handleChange, setGeneratedCode }) => {
-    const [generatedCode, setLocalGeneratedCode] = useState('');
-    const [codeGenerated, setCodeGenerated] = useState(false);
+    const [statusMessage, setStatusMessage] = useState('');
+    const [sentCode, setSentCode] = useState(''); // Stocke le code envoyé
 
-    const generateCode = () => {
-        const code = Math.random().toString(36).substring(2, 8).toUpperCase(); 
-        setLocalGeneratedCode(code);
-        setGeneratedCode(code); 
-        setCodeGenerated(true);
-        console.log('Code de vérification généré et envoyé :', code);
+    const generateCode = async () => {
+        try {
+            // Appel à registerCode pour envoyer le code par email
+            const response = await registerCode({ email: formData.email });
+            console.log('Réponse de l’API:', response); // Affiche la réponse brute pour débogage
 
-        // a lier avec le back-end mailing etc
+            if (!response.error) {
+                const receivedCode = response;
+
+                setSentCode(receivedCode); // Sauvegarde du code envoyé
+                setGeneratedCode(receivedCode); // Envoie le code au composant parent
+                setStatusMessage('Le code de vérification a été envoyé par email.');
+            } else {
+                setStatusMessage('Erreur lors de l\'envoi de l\'email. Veuillez réessayer.');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            setStatusMessage('Erreur lors de la connexion au serveur.');
+        }
+    };
+
+    const handleInputChange = (e) => {
+        handleChange(e); 
     };
 
     return (
@@ -23,15 +39,15 @@ const VerificationCode = ({ formData, handleChange, setGeneratedCode }) => {
                     id="verifCode"
                     name="verifCode"
                     value={formData.verifCode}
-                    onChange={handleChange}
-                    disabled={!codeGenerated}
+                    onChange={handleInputChange}
+                    placeholder="Entrez le code reçu par email"
                 />
             </div>
 
             <button className="submit-button" type="button" onClick={generateCode}>
                 Générer un nouveau code
             </button>
-            <p>Un mail vous sera envoyé !</p>
+            <p>{statusMessage}</p>
         </div>
     );
 };
