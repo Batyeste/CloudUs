@@ -42,7 +42,7 @@ const Header = () => {
                                 <a href="#" className="nav-link">Nos produits</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link">Contact</a>
+                                <Link to="/contact" className="nav-link">Contact</Link>
                             </li>
                             {!token ? (
                                 <li className="nav-item">
