@@ -19,10 +19,16 @@ const Login = () => {
         // console.log('Email:', username);
         // console.log('Password:', password);
         const response = await loginUser({ username, password });
-        // console.log('response', response);
-        if (response.success) {
-            console.log('Connexion réussie');
-        } 
+
+        if (response.token) {
+            // stock token dans le local storage
+            localStorage.setItem('token', response.token);
+            console.log('Token stocké avec succès :', response.token);
+            
+            // rediriger vers le pannel ?
+        } else {
+            console.error('Erreur de connexion :', response.error);
+        }
     };
 
     return (

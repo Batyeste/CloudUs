@@ -1,9 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./Header.css";
+import './Header.css';
+import { getToken } from '../../utils/auth';
 
 const Header = () => {
+    const [token, setToken] = useState(null); 
+    const navigate = useNavigate(); 
+
+    useEffect(() => {
+        const storedToken = getToken();
+        setToken(storedToken); 
+    }, []);
+
+    // pour déconnecter l'utilisateur
+    const handleLogout = () => {
+        localStorage.removeItem('token'); 
+        setToken(null); 
+        navigate('/login'); 
+    };
+
     return (
         <div className="header-container">
             <header>
@@ -28,9 +44,15 @@ const Header = () => {
                             <li className="nav-item">
                                 <a href="#" className="nav-link">Contact</a>
                             </li>
-                            <li className="nav-item">
-                                <Link to="/signup" className="nav-link signup-btn">S'inscrire</Link>
-                            </li>
+                            {!token ? (
+                                <li className="nav-item">
+                                    <Link to="/signup" className="nav-link signup-btn">S'inscrire</Link>
+                                </li>
+                            ) : (
+                                <li className="nav-item">
+                                    <button onClick={handleLogout} className="nav-link logout-btn">Se déconnecter</button>
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </nav>
