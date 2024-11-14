@@ -149,6 +149,34 @@ class AuthenticationController extends AbstractController
         $this->emailService->sendEmail($user->getEmail(), $subject, $content);
     }
 
+    #[Route('/api/code_verif', name: 'api_code_verif', methods: ['POST'])]
+    public function sendConfirmationCodeEmail(Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'] ?? null;
     
+        if (!$email) {
+            return new Response('Email is required', Response::HTTP_BAD_REQUEST);
+        }
+    
+        $confirmationCode = $this->getConfirmationCode();
 
+        $subject = "Code de confirmation";
+        $content = "Voici le code que vous devez utiliser pour confirmer votre compte: " . $confirmationCode;
+        $this->emailService->sendEmail($email, $subject, $content);
+    
+        return new Response($confirmationCode, Response::HTTP_OK);
+    }
+
+    private $generatedCode = '';
+    private $codeGenerated = false;
+
+    private function getConfirmationCode() : string
+    {
+        $code = strtoupper(substr(md5(mt_rand()), 0, 6));
+        $this->generatedCode = $code;
+        $this->codeGenerated = true;
+
+        return $code;
+    }
 }

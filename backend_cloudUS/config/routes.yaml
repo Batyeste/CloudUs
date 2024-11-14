@@ -6,3 +6,8 @@ controllers:
 
 api_login_check:
     path: /api/login
+
+api_code_verif:
+    path: /api/code_verif
+    controller: App\Controller\AuthenticationController::sendConfirmationCodeEmail
+    methods: POST
