@@ -6,6 +6,9 @@
 parameters:
 
 services:
+    App\EventListener\CORSListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }
 
 
     acme_api.event.jwt_created_listener:
