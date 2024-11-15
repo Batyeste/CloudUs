@@ -54,7 +54,6 @@ class FileController extends AbstractController
         $mail = $this->userRepository->decodeToken($request);
 
         $user = $this->userRepository->findOneBy(["email" => $mail]);
-
         $files = $user->getFile();
         return $this->json($files, 200, [], ['groups' => 'file_view']);
     }
