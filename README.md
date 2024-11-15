@@ -20,6 +20,9 @@ Cette API permet aux utilisateurs de gérer leurs fichiers et leur espace de sto
 2. **Installez les dépendances :**
     ```bash
     composer install
+    composer require lexik/jwt-authentication-bundle
+    php bin/console lexik:jwt:generate-keypair
+    
     ```
 
 3. **Configurez la base de données :**

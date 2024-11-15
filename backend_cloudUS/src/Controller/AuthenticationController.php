@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,6 +34,8 @@ class AuthenticationController extends AbstractController
                 'message' => 'Adresse ou mot de passe invalide',
             ], Response::HTTP_UNAUTHORIZED);
         }
+
+       
 
         return $this->json([
 'email'  => $user->getUserIdentifier(),
