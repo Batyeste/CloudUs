@@ -1,0 +1,13 @@
+nelmio_cors:
+    defaults:
+        allow_credentials: true
+        allow_origin: ['*'] # Liste des origines autorisées (remplace '*' par des URLs spécifiques si nécessaire)
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] # Méthodes HTTP autorisées
+        allow_headers: ['Content-Type', 'Authorization'] # En-têtes autorisées
+        expose_headers: [] # En-têtes exposées dans la réponse
+        max_age: 3600 # Cache des pré-requêtes OPTIONS (en secondes)
+    paths:
+        '^/api/': # Appliquer les règles aux routes commençant par "/api/"
+            allow_origin: ['*']
+            allow_headers: ['Content-Type', 'Authorization']
+            allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
