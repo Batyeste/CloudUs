@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -14,8 +17,11 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private $JWTManager;
+    public function __construct(ManagerRegistry $registry, JWTTokenManagerInterface $JWTManager)
     {
+        $this->JWTManager = $JWTManager;
         parent::__construct($registry, User::class);
     }
 
@@ -37,6 +43,29 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $this->findOneBy(['email' => $username]);
     }
+
+    public function decodeToken(Request $request)
+    {
+        // Récupérer le token depuis l'entête Authorization
+        $authHeader = $request->headers->get('Authorization');
+
+        if (!$authHeader || !preg_match('/^Bearer\s+(.*)$/i', $authHeader, $matches)) {
+            return new JsonResponse(['error' => 'Token non fourni ou mal formé'], 400);
+        }
+
+        $token = $matches[1];
+
+
+        try {
+            // Décoder le token
+            $data = $this->JWTManager->parse($token);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Token invalide ou expiré','explication'=>$e->getMessage()], 401);
+        }
+
+        return $data['username'];
+    }
+
 
 //    /**
 //     * @return User[] Returns an array of User objects

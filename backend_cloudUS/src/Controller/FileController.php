@@ -7,6 +7,7 @@ use App\Repository\FileRepository;
 use App\Repository\UserRepository;
 use App\Service\EmailService;
 use App\Service\FileService;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ class FileController extends AbstractController
     private $filerepository;
 
     private $fileService;
-    private $userRepository;
+    private $userRepository; 
 
     public function __construct(FileRepository $fileRepository,UserRepository $userRepository, FileService $fileService,EmailService $emailService) {
         $this->filerepository = $fileRepository;
@@ -29,6 +30,7 @@ class FileController extends AbstractController
         $this->emailService = $emailService;
         $this->userRepository = $userRepository;
     }
+
 
     #[Route('/file', name: 'app_file', methods: ['GET'])]
     public function index(): Response
@@ -47,11 +49,11 @@ class FileController extends AbstractController
 
 
     #[Route('/files/mesFichiers', name: 'list_mes_fichiers')]
-    public function list_mes_fichiers(): Response
+    public function list_mes_fichiers(Request $request): Response
     {
+        $mail = $this->userRepository->decodeToken($request);
 
-        $user = $this->getUser();
-        $user = $this->userRepository->findOneBy(["email" => $user->getUserIdentifier()]);
+        $user = $this->userRepository->findOneBy(["email" => $mail]);
 
         $files = $user->getFile();
         return $this->json($files, 200, [], ['groups' => 'file_view']);
