@@ -6,7 +6,7 @@
 parameters:
 
 services:
-    App\EventListener\CORSListener:
+    App\EventListener\CorsListener:
         tags:
             - { name: kernel.event_listener, event: kernel.response }
 
