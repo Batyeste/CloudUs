@@ -8,6 +8,7 @@ import FacturePDF from './components/FacturePDF.jsx';
 import Login from './components/Login.jsx';
 import Page404 from './components/page404/Page404.jsx';
 import Contact from './components/Contact/Contact.jsx';
+import PageConnecte from './components/pageConnecte/PageConnecte.jsx';
 
 import './App.css';
 import Button from 'react-bootstrap/Button';
@@ -25,6 +26,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Page404 />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/drive" element={<PageConnecte />} />
         {/* <Route path="/produits" element={<Produits />} />
         <Route path="/contact" element={<Contact />} /> */}
       </Routes>

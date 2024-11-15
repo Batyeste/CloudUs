@@ -49,9 +49,14 @@ const Header = () => {
                                     <Link to="/signup" className="nav-link signup-btn">S'inscrire</Link>
                                 </li>
                             ) : (
-                                <li className="nav-item">
-                                    <button onClick={handleLogout} className="nav-link logout-btn">Se déconnecter</button>
-                                </li>
+                                <>
+                                    <li className="nav-item">
+                                        <Link to="/drive" className="nav-link">Votre drive</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <button onClick={handleLogout} className="nav-link logout-btn">Se déconnecter</button>
+                                    </li>
+                                </>
                             )}
                         </ul>
                     </div>
