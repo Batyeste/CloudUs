@@ -64,7 +64,8 @@ class FileController extends AbstractController
     #[Route('/files/upload', name: 'upload_file', methods: ['POST'])]
     public function upload(Request $request): JsonResponse
     {
-        $user = $this->getUser();
+        $mail = $this->userRepository->decodeToken($request);
+        $user = $this->userRepository->findOneBy(['email'=> $mail]);
         $file = $request->files->get('file');
         
 
