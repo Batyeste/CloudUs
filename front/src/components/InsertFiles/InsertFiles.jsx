@@ -40,10 +40,12 @@ export default function InsertFiles() {
     }
     const result = await uploadFile(file);
     if (result.error) {
-      const errorMessage = result.error.message || JSON.stringify(result.error);
-      setUploadStatus(`Erreur | ${errorMessage}`);
+      setUploadStatus(`Erreur lors de l'upload : ${result.error}`);
     } else {
       setUploadStatus(`Fichier uploadé avec succès : ${result.file}`);
+      setTimeout(() => {
+        window.location.reload(); 
+      }, 1000);
     }
   };
 

@@ -5,10 +5,12 @@ import "./PageConnecte.css";
 
 const PageConnecte = () => {
   return (
-    <div className="page-connecte">
-      <GetFiles/>
-      <InsertFiles />
-    </div>
+    <>
+      <div className="page-connecte">
+        <InsertFiles />
+        <GetFiles />
+      </div>
+    </>
   );
 };
 
