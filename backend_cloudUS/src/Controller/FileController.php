@@ -81,8 +81,8 @@ class FileController extends AbstractController
     public function delete(Request $request): JsonResponse
     {
         // Récupérer l'utilisateur actuel
-        $user = $this->getUser();
-        $user = $this->userRepository->findOneBy(["email" => $user->getUserIdentifier()]);
+        $mail = $this->userRepository->decodeToken($request);
+        $user = $this->userRepository->findOneBy(['email'=> $mail]);
 
 
         $data = json_decode($request->getContent(), true);
