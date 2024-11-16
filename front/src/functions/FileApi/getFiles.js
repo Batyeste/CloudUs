@@ -9,9 +9,7 @@ export const getFiles = async () => {
     if (!token) {
       console.error("Token manquant !");
       return { error: { message: "Token manquant" } };
-    } else console.log("token:", token);
-    console.log(` LINK API: ${linkAPI}/files/mesFichiers`);
-    console.log("Authorization:", { Authorization: `Bearer ${token}` });
+    } 
 
     const response = await axios.get(`${linkAPI}/files/mesFichiers`, {
       headers: {

@@ -9,7 +9,6 @@ const VerificationCode = ({ formData, handleChange, setGeneratedCode }) => {
         try {
             // Appel à registerCode pour envoyer le code par email
             const response = await registerCode({ email: formData.email });
-            console.log('Réponse de l’API:', response); // Affiche la réponse brute pour débogage
 
             if (!response.error) {
                 const receivedCode = response;

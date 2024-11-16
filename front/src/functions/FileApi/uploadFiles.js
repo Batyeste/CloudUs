@@ -16,11 +16,12 @@ export const uploadFile = async (file) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      return true;
     } else {
       console.error("Token manquant !");
       return { error: { message: "Token manquant" } };
     }
-
+    
   } catch (error) {
     if (error.response) {
       console.log("API erreur | ", error.response.data);

@@ -23,9 +23,9 @@ const Login = () => {
         if (response.token) {
             // stock token dans le local storage
             localStorage.setItem('token', response.token);
-            console.log('Token stocké avec succès :', response.token);
             
             // rediriger vers le pannel ?
+            window.location.href = '/drive';
         } else {
             console.error('Erreur de connexion :', response.error);
         }
