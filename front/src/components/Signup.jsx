@@ -7,6 +7,8 @@ import PaiementMethod from './PaiementMethod/PaiementMethod';
 
 import { submitRegistration } from '../functions/CallApi/callRegister';
 
+import { submitRegistration } from '../functions/CallApi/callRegister';
+
 const SignUp = () => {
     const [formData, setFormData] = useState({
         nom: '',
