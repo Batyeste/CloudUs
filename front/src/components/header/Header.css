@@ -57,6 +57,21 @@ header {
     background-color: #0056b3;
 }
 
+.navbar-nav .logout-btn {
+    background-color: #ff0040;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    
+}
+
+.navbar-nav .logout-btn:hover {
+    background-color: #b3000f;
+}
+
 /* IMAGE A COTE DU TEXTE*/
 .cloudus-link {
     display: flex;

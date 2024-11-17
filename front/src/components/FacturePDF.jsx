@@ -33,7 +33,7 @@ const MyDocument = ({ formData }) => {
       <Page size="A4" style={styles.page}>
         {/* En tête */}
         <View style={styles.header}>
-          <Image style={styles.logo} src="/cloudUs.png" />
+          <Image style={styles.logo} src="/img/cloudUs.png" />
           <Text>Facture</Text>
         </View>
 

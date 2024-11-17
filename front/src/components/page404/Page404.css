@@ -1,0 +1,59 @@
+.t-404-center {
+    height: 80vh;
+    background-color: #f7fafc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container-colors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 1.25rem;
+  }
+  
+  .max-w-md {
+    max-width: 28rem;
+  }
+  
+  .t-404 {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #4a5568;
+  }
+  
+  .text-lign {
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #4a5568;
+  }
+  
+  .mb-8 {
+    margin-bottom: 2rem;
+  }
+  
+  .link-button {
+    display: inline-block;
+    background-color: #4a5568;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+  }
+  
+  .link-button:hover {
+    background-color: #2d3748;
+  }
+  .error-image {
+    width: 800px; 
+    height: 800px;
+    background-image: url('../../../public/img/404Error.svg');
+    background-size: contain;   
+    background-repeat: no-repeat;
+    background-position: center;
+}
