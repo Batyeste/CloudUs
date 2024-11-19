@@ -5,7 +5,7 @@ export default function Contact() {
   const teamMembers = [
     {
       pretitle: 'Développeur Backend',
-      title: 'Yohann Rousseau',
+      title: 'Yohann Aharh',
       description: 'Yohann travaille sur le backend du projet, gérant les bases de données et les API pour assurer une communication fluide entre le client et le serveur.',
       action: 'Voir GitHub',
       position: 'start',
