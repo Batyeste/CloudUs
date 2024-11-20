@@ -40,6 +40,28 @@ class EmailService
         $this->mailer->send($email);
     }
 
+
+    public function senddeleteaccountNotification(string $userEmail ,string $nom , string $prenom): void
+    {
+        $email = (new Email())
+            ->from($this->mailProjet)
+            ->to($userEmail)
+            ->subject('Confirmation de la suppression de votre compte')
+            ->text("Bonjour $nom $prenom,
+
+Nous vous confirmons que votre compte associé à l'adresse e-mail $userEmail a été supprimé avec succès.
+
+Toutes vos données personnelles et informations liées à ce compte ont été supprimées de nos systèmes, conformément à notre politique de confidentialité.
+
+Si vous avez des questions ou besoin d'assistance supplémentaire, n'hésitez pas à nous contacter à [adresse e-mail de support].
+
+Merci de nous avoir fait confiance.
+
+Cordialement,
+CloudUs");
+        $this->mailer->send($email);
+    }
+
     public function sendFileDeletionNotification(string $userEmail, int $fileCount): void
     {
         $email = (new Email())

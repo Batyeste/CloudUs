@@ -66,7 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, File>
      */
-    #[ORM\OneToMany(targetEntity: File::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: File::class, mappedBy: 'user', cascade: ["remove"])]
     #[Groups(['user_files'])]
     private Collection $file;
 
