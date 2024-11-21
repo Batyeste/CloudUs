@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PricingCard from './CardPrice/PricingCard';
 import VerificationCode  from './codeVerif/codeVerif';
 import PaiementMethod from './PaiementMethod/PaiementMethod';
+import { loginUser } from '../functions/CallApi/callLogin';
 
 import { submitRegistration } from '../functions/CallApi/callRegister';
 
@@ -154,8 +155,20 @@ const SignUp = () => {
             //-- Appel de la fonction submitRegistration
             const response = await submitRegistration(formData);
             if (response.success) {
-                //-- Redirection vers la page de facture si tout est valide
-                navigate('/pdf', { state: { formData } });
+
+                const { email, password } = formData;
+
+                const loginResponse = await loginUser({ username: email, password });
+                if (loginResponse.token) {
+                    localStorage.setItem('token', loginResponse.token);
+                    navigate('/pdf', { state: { formData } });
+                
+                    // redirection après 10 second (pour refresh la navbar)
+                    setTimeout(() => {
+                        window.location.href = '/drive';
+                    }, 3000);                
+                }
+
             } else {
                 setError(response.data.error || 'Une erreur est survenue lors de l\'inscription.');
             }
