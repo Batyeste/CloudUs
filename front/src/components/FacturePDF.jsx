@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Page, Text, View, Document, StyleSheet, PDFViewer, Image } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, PDFViewer, Image, pdf } from '@react-pdf/renderer';
+import { uploadFile } from "../functions/FileApi/uploadFiles";
 
 //--- Style global pour la facture
 const styles = StyleSheet.create({
@@ -33,7 +34,7 @@ const MyDocument = ({ formData }) => {
       <Page size="A4" style={styles.page}>
         {/* En tête */}
         <View style={styles.header}>
-          <Image style={styles.logo} src="/cloudUs.png" />
+          <Image style={styles.logo} src="/img/cloudUs.png" />
           <Text>Facture</Text>
         </View>
 
@@ -97,20 +98,59 @@ const Facture = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { formData } = location.state || {};
+  const [uploadStatus, setUploadStatus] = useState(null);
+
+  const handleUpload = async () => {
+    if (!formData) {
+      setUploadStatus('Erreur : aucune donnée disponible.');
+      return;
+    }
+
+    try {
+      // Génération du PDF en Blob
+      const pdfBlob = await pdf(<MyDocument formData={formData} />).toBlob();
+      const file = new File([pdfBlob], "facture.pdf", { type: "application/pdf" });
+
+      // Envoi du fichier via l'API
+      const response = await uploadFile(file);
+      if (response.error) {
+        setUploadStatus(`Erreur lors de l'upload : ${response.error}`);
+      } else {
+        setUploadStatus('Facture téléchargée avec succès.');
+      }
+    } catch (error) {
+      setUploadStatus(`Erreur inattendue : ${error.message}`);
+    }
+  };
+
+  useEffect(() => {
+    if (formData) {
+      handleUpload();
+    } else {
+      setTimeout(() => navigate('/'), 3000);
+    }
+  }, [formData, navigate]);
 
   if (!formData) {
     return (
       <div>
         <p>Erreur : Aucune donnée disponible. Redirection vers l'inscription...</p>
-        {setTimeout(() => navigate('/'), 3000)}
       </div>
     );
   }
 
   return (
-    <PDFViewer width="100%" height="1000">
-      <MyDocument formData={formData} />
-    </PDFViewer>
+    <div>
+      <PDFViewer width="100%" height="1000">
+        <MyDocument formData={formData} />
+      </PDFViewer>
+      <div style={{ marginTop: 20, textAlign: 'center' }}>
+        <p>{uploadStatus}</p>
+        <button onClick={handleUpload} style={{ marginTop: 10 }}>
+          Relancer l'upload
+        </button>
+      </div>
+    </div>
   );
 };
 

@@ -1,0 +1,26 @@
+import axios from "axios";
+import { getAuthToken } from "../tokenAuth/authToken";
+
+const linkAPI = process.env.REACT_APP_LinkAPI;
+
+export const getFiles = async () => {
+  try {
+    const token = getAuthToken();
+    if (!token) {
+      console.error("Token manquant !");
+      return { error: { message: "Token manquant" } };
+    } 
+
+    const response = await axios.get(`${linkAPI}/files/mesFichiers`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error response:", error.response?.data || error.message);
+    return { error: error.response?.data || error.message };
+  }
+};

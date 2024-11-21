@@ -3,6 +3,10 @@ import "./Signup.css";
 import { useNavigate } from 'react-router-dom'; 
 import PricingCard from './CardPrice/PricingCard';
 import VerificationCode  from './codeVerif/codeVerif';
+import PaiementMethod from './PaiementMethod/PaiementMethod';
+import { loginUser } from '../functions/CallApi/callLogin';
+
+import { submitRegistration } from '../functions/CallApi/callRegister';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -134,7 +138,7 @@ const SignUp = () => {
         return true;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
@@ -148,12 +152,31 @@ const SignUp = () => {
         } else if (step === 4 ) {
             setStep(5);
         } else if (step === 5 && validateStep5()) {
-            //-- Redirection vers la page de facture si tout est valide
-            navigate('/pdf', { state: { formData } });
-            console.log(formData);
+            //-- Appel de la fonction submitRegistration
+            const response = await submitRegistration(formData);
+            if (response.success) {
+
+                const { email, password } = formData;
+
+                const loginResponse = await loginUser({ username: email, password });
+                if (loginResponse.token) {
+                    localStorage.setItem('token', loginResponse.token);
+                    navigate('/pdf', { state: { formData } });
+                
+                    // redirection après 10 second (pour refresh la navbar)
+                    setTimeout(() => {
+                        window.location.href = '/drive';
+                    }, 3000);                
+                }
+
+            } else {
+                setError(response.data.error || 'Une erreur est survenue lors de l\'inscription.');
+            }
         } else {
             console.log('Error:', error);
         }
+
+
     };
     const formule1 = { prix: '10', stockage: '10', raison1: 'Support standard', raison2: '1Go de transfert' };
     const formule2 = { prix: '50', stockage: '50', raison1: 'Support prioritaire', raison2: '10Go de transfert'  };
@@ -267,54 +290,11 @@ const SignUp = () => {
                 
                 {step === 5 && (
                     <div>
-                        <div className="form-group">
-                            <label htmlFor="tituleCB">Titulaire carte</label>
-                            <input type="text" id="tituleCB" name="tituleCB" value={formData.tituleCB} onChange={handleChange} />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="paymentMethod">Méthode de paiement</label>
-                            <select id="paymentMethod" name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
-                                <option value="">Sélectionnez une méthode</option>
-                                <option value="creditCard">Carte de crédit</option>
-                                <option value="paypal">PayPal</option>
-                                <option value="bankTransfer">Virement bancaire</option>
-                            </select>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="cardNumber">Numéro de carte</label>
-                            <input type="text" id="cardNumber" name="cardNumber" value={formData.cardNumber} onChange={handleChange} maxLength={16}/>
-                        </div>
-
-                        <div className="form-group">
-                            <label>Date d'expiration</label>
-                            <div>
-                                <select id="expiryMonth" name="expiryMonth" value={formData.expiryMonth} onChange={handleChange} >
-                                    <option value="">Mois</option>
-                                    {[...Array(12)].map((_, i) => (
-                                        <option key={i+1} value={i+1 < 10 ? `0${i+1}` : i+1}>
-                                            {i+1 < 10 ? `0${i+1}` : i+1}
-                                        </option>
-                                    ))}
-                                </select>
-
-                                <select id="expiryYear" name="expiryYear" value={formData.expiryYear} onChange={handleChange} >
-                                    <option value="">Année</option>
-                                    {[...Array(10)].map((_, i) => (
-                                        <option key={i} value={new Date().getFullYear() + i}>
-                                            {new Date().getFullYear() + i}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="cvv">CVV</label>
-                            <input type="text" id="cvv" name="cvv" value={formData.cvv} onChange={handleChange} maxLength={4}/>
-                        </div>
-                        {error && <p className="error-message">{error}</p>}
+                       <PaiementMethod
+                        formData={formData}
+                        handleChange={handleChange}
+                        error={error}
+                    />
                     </div>
                 )}  
 
