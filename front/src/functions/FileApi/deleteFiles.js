@@ -3,25 +3,24 @@ import { getAuthToken } from "../tokenAuth/authToken";
 
 const linkAPI = process.env.REACT_APP_LinkAPI;
 
-export const uploadFile = async (file) => {
-  const formData = new FormData();
-  formData.append("file", file);
-
+export const deleteFiles = async (fileIds) => {
   try {
     const token = getAuthToken();
     if (token) {
-        await axios.post(`${linkAPI}/files/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return true;
+      await axios.post(
+        `${linkAPI}/files/delete`,
+        { fileIds },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } else {
       console.error("Token manquant !");
       return { error: { message: "Token manquant" } };
     }
-    
   } catch (error) {
     if (error.response) {
       console.log("API erreur | ", error.response.data);

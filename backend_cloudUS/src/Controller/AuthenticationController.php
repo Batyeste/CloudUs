@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\EmailService;
 use Symfony\Component\Routing\Attribute\Route;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -19,10 +20,12 @@ class AuthenticationController extends AbstractController
 {
 
     private $emailService;
+    private $JWTManager;
 
-    public function __construct(EmailService $emailService)
+    public function __construct(EmailService $emailService, JWTTokenManagerInterface $JWTManager)
     {
         $this->emailService = $emailService;
+        $this->JWTManager = $JWTManager;
     }
 
     #[Route('/api/login', name: 'api_login', methods: ['POST'])]
@@ -83,14 +86,12 @@ class AuthenticationController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
+        $token = $this->JWTManager->create($user);
 
-
-        // Traiter les données ici
-        // Par exemple, vous pouvez les sauvegarder en base de données
-        $this->sendConfirmationEmail($user);
-        // Retourner une réponse JSON
+        // Retourner une réponse JSON avec le token
         return new JsonResponse([
             'status' => 'Inscription effectuée',
+            'token' => $token,
         ]);
     }
 
