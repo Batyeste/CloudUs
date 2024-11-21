@@ -53,9 +53,11 @@ class UserController extends AbstractController
 
         // Ajouter 20 Go d'espace (20 480 Ko)
         $additionalStorage = 20480;
-        $additionalStorage = ($additionalStorage * $stockage)/20;
+        $newstorage = $stockage * 1024 * 1024 * 1024;
 
-        $user->setTotalStorage($user->getTotalStorage() + $additionalStorage);
+        
+
+        $user->setTotalStorage($user->getTotalStorage() + $newstorage);
 
     // Sauvegarder la mise à jour de l'utilisateur
         $this->entityManager->persist($user);
@@ -73,10 +75,10 @@ class UserController extends AbstractController
         'quantity' => 1,          // Quantité achetée
 
         // Montants calculés
-        'total_ht' => 20.00,      // Total hors taxe
+        'total_ht' => $stockage,      // Total hors taxe
         'tva_rate' => 0.20,       // Taux de TVA (20%)
-        'tva_amount' => 20.00 * 0.20,  // Montant de la TVA
-        'total_ttc' => 20.00 * 1.20    // Montant total toutes taxes comprises
+        'tva_amount' => $stockage * 0.20,  // Montant de la TVA
+        'total_ttc' => $stockage * 1.20    // Montant total toutes taxes comprises
 
         ];
         
