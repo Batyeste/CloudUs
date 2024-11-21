@@ -54,6 +54,9 @@ const Header = () => {
                                         <Link to="/drive" className="nav-link">Votre drive</Link>
                                     </li>
                                     <li className="nav-item">
+                                        <Link to="/add-stockage" className="nav-link">Ajouter du stockage</Link>
+                                    </li>
+                                    <li className="nav-item">
                                         <button onClick={handleLogout} className="nav-link logout-btn">Se déconnecter</button>
                                     </li>
                                 </>
