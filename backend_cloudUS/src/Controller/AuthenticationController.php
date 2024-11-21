@@ -80,7 +80,7 @@ class AuthenticationController extends AbstractController
                 $password
             )
         );
-        $user->setTotalStorage(20 * 1024 * 1024 * 1024);
+        $user->setTotalStorage(20 * 1024 * 1024);
         $user->setUserStorage(0);
 
         $entityManager->persist($user);
