@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { registerCode } from '../../functions/CallApi/callCode';
+import { TextField, Box, Typography, Button } from '@mui/material';
+import theme from '../theme/theme';
+
 
 const VerificationCode = ({ formData, handleChange, setGeneratedCode }) => {
     const [statusMessage, setStatusMessage] = useState('');
@@ -30,24 +33,40 @@ const VerificationCode = ({ formData, handleChange, setGeneratedCode }) => {
     };
 
     return (
-        <div>
-            <div className="form-group">
-                <label htmlFor="verifCode">Code de vérification</label>
-                <input
-                    type="text"
+<Box mb={10}>
+            <Box mb={2}>
+                <Typography variant="h3" gutterBottom>
+                    Code de vérification
+                </Typography>
+                <TextField
+                    fullWidth
+                    label="Code de vérification"
                     id="verifCode"
                     name="verifCode"
                     value={formData.verifCode}
                     onChange={handleInputChange}
                     placeholder="Entrez le code reçu par email"
+                    variant="filled"
                 />
-            </div>
+            </Box>
 
-            <button className="submit-button" type="button" onClick={generateCode}>
-                Générer un nouveau code
-            </button>
-            <p>{statusMessage}</p>
-        </div>
+            <Box mb={2}>
+                <Button 
+                    variant="contained" 
+                    sx={{ ...theme.components.MuiButton.styleOverrides.secondaryButton }}
+                    onClick={generateCode}
+                    fullWidth
+                >
+                    Générer un nouveau code
+                </Button>
+            </Box>
+
+            {statusMessage && (
+                <Typography variant="body2" color="textSecondary">
+                    {statusMessage}
+                </Typography>
+            )}
+        </Box>
     );
 };
 

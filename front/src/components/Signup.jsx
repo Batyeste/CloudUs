@@ -3,6 +3,11 @@ import "./Signup.css";
 import { useNavigate } from 'react-router-dom'; 
 import PricingCard from './CardPrice/PricingCard';
 import VerificationCode  from './codeVerif/codeVerif';
+import { TextField, Box, Typography, Button } from '@mui/material';
+import theme from './theme/theme';
+import PaiementMethod from './PaiementMethod/PaiementMethod';
+
+
 
 import { submitRegistration } from '../functions/CallApi/callRegister';
 
@@ -164,9 +169,7 @@ const SignUp = () => {
 
 
     };
-    const formule1 = { prix: '10', stockage: '10', raison1: 'Support standard', raison2: '1Go de transfert' };
-    const formule2 = { prix: '50', stockage: '50', raison1: 'Support prioritaire', raison2: '10Go de transfert'  };
-    const formule3 = { prix: '100', stockage: '100', raison1: 'Support 7/7', raison2: '50Go de transfert'  };
+    const formule1 = { prix: '20', stockage: '10', raison1: 'Support standard', raison2: '1Go de transfert' };
 
     const handlePrevious = () => {
         // si supérieur à l'étape 1
@@ -176,75 +179,168 @@ const SignUp = () => {
     };
 
     return (
-        <div className="form-container">
-            <h2>Créer votre compte</h2>
-            <form onSubmit={handleSubmit}>
-                {step === 1 && (
-                    <div>
-                        <div className="form-group">
-                            <label htmlFor="nom">Nom</label>
-                            <input type="text" id="nom" name="nom" value={formData.nom} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="prenom">Prénom</label>
-                            <input type="text" id="prenom" name="prenom" value={formData.prenom} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="tel">Téléphone</label>
-                            <input type="tel" id="tel" name="tel" value={formData.tel} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="text">Adresse postale</label>
-                            <input type="text" id="adressePostale" name="adressePostale" value={formData.adressePostale} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Mot de passe</label>
-                            <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="confirm-password">Confirmer le mot de passe</label>
-                            <input type="password" id="confirm-password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-                        </div>
-                        {error && <p className="error-message">{error}</p>}
-                    </div>
-                )}
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '88vh',
+                backgroundColor: 'background.default',
+                padding: 3,
+            }}
+        >
+            <Typography variant="h2" sx={{ marginBottom: 5 }}>
+                Créer votre compte
+            </Typography>
 
-                {step === 2 && (
-                    <div>
-                        <div className="form-group">
-                            <label htmlFor="nom-soc">Nom de votre société</label>
-                            <input type="text" id="nomSoce" name="nomSoce" value={formData.nomSoce} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="text">Adresse postale de votre société</label>
-                            <input type="text" id="adressePostaleSoce" name="adressePostaleSoce" value={formData.adressePostaleSoce} onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="siret">Siret</label>
-                            <input type="text" id="siret" name="siret" value={formData.siret} onChange={handleChange} maxLength={14} />
-                        </div>
-                        {siretError && <p className="error-message">{siretError}</p>}
-                    </div>
-                )}
-
-                {step === 3 && (
-                    <div>
-                        <VerificationCode
-                            formData={formData}
-                            handleChange={handleChange}
-                            setGeneratedCode={setGeneratedCode}
+            {step === 1 && (
+                <Box sx={{width: '25vw'}}>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Nom"
+                            id="nom"
+                            name="nom"
+                            value={formData.nom}
+                            onChange={handleChange}
+                            variant="filled" // Style Filled
                         />
-                        {error && <p className="error-message">{error}</p>}
-                    </div>
-                )}
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Prénom"
+                            id="prenom"
+                            name="prenom"
+                            value={formData.prenom}
+                            onChange={handleChange}
+                            variant="filled" // Style Filled
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            type="email"
+                            variant="filled" // Style Filled
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Téléphone"
+                            id="tel"
+                            name="tel"
+                            value={formData.tel}
+                            onChange={handleChange}
+                            type="tel"
+                            variant="filled" // Style Filled
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Adresse postale"
+                            id="adressePostale"
+                            name="adressePostale"
+                            value={formData.adressePostale}
+                            onChange={handleChange}
+                            variant="filled" // Style Filled
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Mot de passe"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            type="password"
+                            variant="filled" // Style Filled
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Confirmer le mot de passe"
+                            id="confirm-password"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            type="password"
+                            variant="filled" // Style Filled
+                        />
+                    </Box>
+                    {error && <Typography color="error" variant="body2">{error}</Typography>}
+                </Box>
+            )}
 
-                {step === 4 && (
-                    <div>
-                        <div className="pricing-container">
+
+            {step === 2 && (
+                <Box sx={{
+                    width: '25vw'      
+                }}>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Nom de votre société"
+                            id="nomSoce"
+                            name="nomSoce"
+                            value={formData.nomSoce}
+                            onChange={handleChange}
+                            variant="filled" 
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Adresse postale de votre société"
+                            id="adressePostaleSoce"
+                            name="adressePostaleSoce"
+                            value={formData.adressePostaleSoce}
+                            onChange={handleChange}
+                            variant="filled" 
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            fullWidth
+                            label="Siret"
+                            id="siret"
+                            name="siret"
+                            value={formData.siret}
+                            onChange={handleChange}
+                            maxLength={14}
+                            variant="filled" 
+                        />
+                    </Box>
+                    {siretError && <Typography color="error" variant="body2">{siretError}</Typography>}
+                </Box>
+            )}
+
+            {step === 3 && (
+                <Box>
+                    <VerificationCode
+                        formData={formData}
+                        handleChange={handleChange}
+                        setGeneratedCode={setGeneratedCode}
+                    />
+                    {error && <Typography color="error" variant="body2">{error}</Typography>}
+                </Box>
+            )}
+
+
+            {step === 4 && (
+                <Box mb={5}>
+                    <Box className="pricing-container">
                         <PricingCard
                             title="Standard"
                             price={formule1.prix}
@@ -253,92 +349,45 @@ const SignUp = () => {
                             raison2={formule1.raison2}
                             onClick={() => handleCardClick(formule1.prix, formule1.stockage)}
                         />
-                        <PricingCard
-                            title="Premium"
-                            price={formule2.prix}
-                            storage={formule2.stockage}
-                            raison1={formule2.raison1}
-                            raison2={formule2.raison2}
-                            onClick={() => handleCardClick(formule2.prix, formule2.stockage)}
-                        />    
-                            <PricingCard
-                            title="Pro"
-                            price={formule3.prix}
-                            storage={formule3.stockage}
-                            raison1={formule3.raison1}
-                            raison2={formule3.raison2}
-                            onClick={() => handleCardClick(formule3.prix, formule3.stockage)}
-                            />
-                        </div>
-                        {error && <p className="error-message">{error}</p>}
-                    </div>
-                )}
+                    </Box>
+                    {error && <Typography color="error" variant="body2">{error}</Typography>}
+                </Box>
+            )}
+
                 
-                {step === 5 && (
-                    <div>
-                        <div className="form-group">
-                            <label htmlFor="tituleCB">Titulaire carte</label>
-                            <input type="text" id="tituleCB" name="tituleCB" value={formData.tituleCB} onChange={handleChange} />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="paymentMethod">Méthode de paiement</label>
-                            <select id="paymentMethod" name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
-                                <option value="">Sélectionnez une méthode</option>
-                                <option value="creditCard">Carte de crédit</option>
-                                <option value="paypal">PayPal</option>
-                                <option value="bankTransfer">Virement bancaire</option>
-                            </select>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="cardNumber">Numéro de carte</label>
-                            <input type="text" id="cardNumber" name="cardNumber" value={formData.cardNumber} onChange={handleChange} maxLength={16}/>
-                        </div>
-
-                        <div className="form-group">
-                            <label>Date d'expiration</label>
-                            <div>
-                                <select id="expiryMonth" name="expiryMonth" value={formData.expiryMonth} onChange={handleChange} >
-                                    <option value="">Mois</option>
-                                    {[...Array(12)].map((_, i) => (
-                                        <option key={i+1} value={i+1 < 10 ? `0${i+1}` : i+1}>
-                                            {i+1 < 10 ? `0${i+1}` : i+1}
-                                        </option>
-                                    ))}
-                                </select>
-
-                                <select id="expiryYear" name="expiryYear" value={formData.expiryYear} onChange={handleChange} >
-                                    <option value="">Année</option>
-                                    {[...Array(10)].map((_, i) => (
-                                        <option key={i} value={new Date().getFullYear() + i}>
-                                            {new Date().getFullYear() + i}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="cvv">CVV</label>
-                            <input type="text" id="cvv" name="cvv" value={formData.cvv} onChange={handleChange} maxLength={4}/>
-                        </div>
-                        {error && <p className="error-message">{error}</p>}
-                    </div>
-                )}  
-
-                <div className="form-navigation">
-                    {step > 1 && <button type="button" className="submit-button" onClick={handlePrevious}>Précédent</button>}
-                    {step !== 4 && <button type="submit" className="submit-button">
-                        {step === 4 ? "S'inscrire" : "Suivant"}
-                    </button>}
+            {step === 5 && (
+                <div>
+                <PaiementMethod
+                    formData={formData}
+                    handleChange={handleChange}
+                    error={error}
+                />
                 </div>
-            </form>
-            <div className="connexion-container">
-                <p className='connexion-text'>Vous avez déjà un compte ?</p>
-                <a href="/login" className="connexion-link">Connectez-vous</a>
-            </div>
-        </div>
+            )}  
+                <Box sx={{
+                    width: '25vw'      
+                }}>
+                    {step > 1 && <Button type="button" onClick={handlePrevious} sx={{...theme.components.MuiButton.styleOverrides.primaryButton, mb: 1}} fullWidth>Précédent</Button>}
+                    {step !== 4 && <Button type="submit" sx={{ ...theme.components.MuiButton.styleOverrides.primaryButton }} fullWidth >
+                        {step === 4 ? "S'inscrire" : "Suivant"}
+                    </Button>}
+                </Box>
+            <Box sx={{ marginTop: 3, textAlign: 'center' }}>
+                <Typography
+                    variant="body2"
+                    sx={{ color: 'text.tertiary', marginBottom: 1 }}
+                >
+                    Vous avez déjà un compte ?
+                </Typography>
+                <Button
+                    href="/login"
+                    sx={{ ...theme.components.MuiButton.styleOverrides.secondaryButton }}
+                    fullWidth
+                >
+                    Connectez-vous
+                </Button>
+            </Box>
+        </Box>
     );
 };
 

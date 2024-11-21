@@ -19,25 +19,24 @@ import InfosDetails from './pages/Admin/InfosDetails/InfosDetails.jsx';
 function App() {
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Accueil />} />
-        <Route path="/accueil" element={<Accueil />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/pdf" element={<FacturePDF />} /> 
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Page404 />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/drive" element={<PageConnecte />} />
-        {/* <Route path="/produits" element={<Produits />} />
-        <Route path="/contact" element={<Contact />} /> */}
+        <Header />
+        <Routes>
+          <Route path="/" element={<Accueil />} />
+          <Route path="/accueil" element={<Accueil />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/pdf" element={<FacturePDF />} /> 
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Page404 />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/drive" element={<PageConnecte />} />
+          {/* <Route path="/produits" element={<Produits />} />
+          <Route path="/contact" element={<Contact />} /> */}
 
-        {/* ADMIN */}
-        <Route path="/admin" element={<HomeAdmin />} />
-        <Route path="/client-details/:clientId" element={<InfosDetails />} />
-      </Routes>
-      <Footer />
-
+          {/* ADMIN */}
+          <Route path="/admin" element={<HomeAdmin />} />
+          <Route path="/client-details/:clientId" element={<InfosDetails />} />
+        </Routes>
+        <Footer />
       
 
     </>
