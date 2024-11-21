@@ -10,6 +10,7 @@ import Page404 from './components/page404/Page404.jsx';
 import Contact from './components/Contact/Contact.jsx';
 import PageConnecte from './components/pageConnecte/PageConnecte.jsx';
 import HomeAdmin from './pages/Admin/homeAdmin.jsx'
+import AddStockage from './components/AddStockage/AddStockage.jsx';
 
 import './App.css';
 import Button from 'react-bootstrap/Button';
@@ -29,6 +30,7 @@ function App() {
         <Route path="*" element={<Page404 />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/drive" element={<PageConnecte />} />
+        <Route path="/add-stockage" element={<AddStockage />} />
         {/* <Route path="/produits" element={<Produits />} />
         <Route path="/contact" element={<Contact />} /> */}
 
