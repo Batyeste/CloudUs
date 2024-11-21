@@ -3,7 +3,7 @@ import "./PaiementMethod.css";
 
 const PaiementMethod = ({ formData, handleChange, error }) => {
   return (
-    <div>
+    <div className="grouped">
       <div className="form-group">
         <label htmlFor="tituleCB">Titulaire carte</label>
         <input
