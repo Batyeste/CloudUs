@@ -1,92 +1,151 @@
 import React from "react";
+import {
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Typography,
+  Box,
+  Stack,
+} from "@mui/material";
+import theme from "../theme/theme";
 
 const PaiementMethod = ({ formData, handleChange, error }) => {
   return (
-    <div>
-      <div className="form-group">
-        <label htmlFor="tituleCB">Titulaire carte</label>
-        <input
-          type="text"
+    <Box component="form" sx={{ maxWidth: 600, mx: "auto", mb: 5 }}>
+      {/* Titulaire de la carte */}
+      <FormControl fullWidth margin="normal">
+        <TextField
+          label="Titulaire carte"
           id="tituleCB"
           name="tituleCB"
           value={formData.tituleCB}
           onChange={handleChange}
+          variant="standard"
         />
-      </div>
+      </FormControl>
 
-      <div className="form-group">
-        <label htmlFor="paymentMethod">Méthode de paiement</label>
-        <select
+      {/* Méthode de paiement */}
+      <FormControl fullWidth margin="normal" variant="standard">
+        <InputLabel
+          id="paymentMethod-label"
+          sx={{ color: theme.palette.text.tertiary }}
+        >
+          Méthode de paiement
+        </InputLabel>
+        <Select
+          labelId="paymentMethod-label"
           id="paymentMethod"
           name="paymentMethod"
           value={formData.paymentMethod}
           onChange={handleChange}
-        >
-          <option value="">Sélectionnez une méthode</option>
-          <option value="creditCard">Carte de crédit</option>
-          <option value="paypal">PayPal</option>
-          <option value="bankTransfer">Virement bancaire</option>
-        </select>
-      </div>
+          sx={{
+            color: theme.palette.text.primary,
 
-      <div className="form-group">
-        <label htmlFor="cardNumber">Numéro de carte</label>
-        <input
-          type="text"
+            "& .MuiList-root": {
+              bgcolor: theme.palette.background.default,
+            },
+          }}
+        >
+          <MenuItem value="">Sélectionnez une méthode</MenuItem>
+          <MenuItem value="creditCard">Carte de crédit</MenuItem>
+          <MenuItem value="paypal">PayPal</MenuItem>
+          <MenuItem value="bankTransfer">Virement bancaire</MenuItem>
+        </Select>
+      </FormControl>
+
+      {/* Numéro de carte */}
+      <FormControl fullWidth margin="normal">
+        <TextField
+          label="Numéro de carte"
           id="cardNumber"
           name="cardNumber"
           value={formData.cardNumber}
           onChange={handleChange}
-          maxLength={16}
+          variant="standard"
+          slotProps={{
+            htmlInput: {
+              maxLength: 16,
+            },
+          }}
         />
-      </div>
+      </FormControl>
 
-      <div className="form-group">
-        <label>Date d'expiration</label>
-        <div>
-          <select
+      <Stack direction="row" spacing={2}>
+        {/* Mois */}
+        <FormControl fullWidth variant="standard">
+          <InputLabel
+            id="expiryMonth-label"
+            sx={{ color: theme.palette.text.tertiary }}
+          >
+            Mois
+          </InputLabel>
+          <Select
+            labelId="expiryMonth-label"
             id="expiryMonth"
             name="expiryMonth"
             value={formData.expiryMonth}
             onChange={handleChange}
           >
-            <option value="">Mois</option>
+            <MenuItem value="">Mois</MenuItem>
             {[...Array(12)].map((_, i) => (
-              <option key={i + 1} value={i + 1 < 10 ? `0${i + 1}` : i + 1}>
+              <MenuItem key={i + 1} value={i + 1 < 10 ? `0${i + 1}` : i + 1}>
                 {i + 1 < 10 ? `0${i + 1}` : i + 1}
-              </option>
+              </MenuItem>
             ))}
-          </select>
+          </Select>
+        </FormControl>
 
-          <select
+        {/* Année */}
+        <FormControl fullWidth variant="standard">
+          <InputLabel
+            id="expiryYear-label"
+            sx={{ color: theme.palette.text.tertiary }}
+          >
+            Année
+          </InputLabel>
+          <Select
+            labelId="expiryYear-label"
             id="expiryYear"
             name="expiryYear"
             value={formData.expiryYear}
             onChange={handleChange}
           >
-            <option value="">Année</option>
+            <MenuItem value="">Année</MenuItem>
             {[...Array(10)].map((_, i) => (
-              <option key={i} value={new Date().getFullYear() + i}>
+              <MenuItem key={i} value={new Date().getFullYear() + i}>
                 {new Date().getFullYear() + i}
-              </option>
+              </MenuItem>
             ))}
-          </select>
-        </div>
-      </div>
+          </Select>
+        </FormControl>
+      </Stack>
 
-      <div className="form-group">
-        <label htmlFor="cvv">CVV</label>
-        <input
-          type="text"
+      {/* CVV */}
+      <FormControl fullWidth margin="normal">
+        <TextField
+          label="CVV"
           id="cvv"
           name="cvv"
           value={formData.cvv}
           onChange={handleChange}
-          maxLength={4}
+          variant="standard"
+          slotProps={{
+            htmlInput: {
+              maxLength: 3,
+            },
+          }}
         />
-      </div>
-      {error && <p className="error-message">{error}</p>}
-    </div>
+      </FormControl>
+
+      {/* Message d'erreur */}
+      {error && (
+        <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+          {error}
+        </Typography>
+      )}
+    </Box>
   );
 };
 

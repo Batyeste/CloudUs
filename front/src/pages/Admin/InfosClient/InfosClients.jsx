@@ -1,14 +1,13 @@
-import React from 'react';
-import DataGridClient from '../../../components/DataGridClient/DataGridClient';
-import { Box } from '@mui/material';
-import { Title } from '@mui/icons-material';
-
-
+import React from "react";
+import DataGridClient from "../../../components/DataGridClient/DataGridClient";
+import { Box, Typography } from "@mui/material";
 
 function InfosClients() {
   return (
     <Box>
-      <h1>Informations des clients</h1>
+      <Typography variant="h1" sx={{ mb: 2 }}>
+        Informations des clients
+      </Typography>
       <DataGridClient clients />
     </Box>
   );

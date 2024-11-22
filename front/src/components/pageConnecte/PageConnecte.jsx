@@ -1,16 +1,25 @@
 import React from "react";
 import InsertFiles from "../InsertFiles/InsertFiles";
 import GetFiles from "../GetFiles/GetFiles";
-import "./PageConnecte.css";
+import { Box } from "@mui/material";
+import theme from "../theme/theme";
 
 const PageConnecte = () => {
   return (
-    <>
-      <div className="page-connecte">
-        <InsertFiles />
-        <GetFiles />
-      </div>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "84vh",
+        padding: 2,
+        bgcolor: theme.palette.background.default,
+      }}
+    >
+      <InsertFiles />
+      <GetFiles />
+    </Box>
   );
 };
 

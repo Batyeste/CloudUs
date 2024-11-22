@@ -1,11 +1,19 @@
-import React from 'react';
-import { Box, Typography, Card, CardMedia, CardContent } from '@mui/material';
+import React from "react";
+import { Box, Typography, Card, CardMedia, CardContent } from "@mui/material";
+import theme from "../../../components/theme/theme";
 
 function ImageSection({ images }) {
   return (
     <Box display="flex" flexWrap="wrap" gap={2}>
-      {images.map(image => (
-        <Card key={image.fileId} sx={{ width: 200 }}>
+      {images.map((image) => (
+        <Card
+          key={image.fileId}
+          sx={{
+            width: 200,
+            bgcolor: theme.palette.background.secondary,
+            boxShadow: "0 3 7px rgba(0, 0, 0, 0.5)",
+          }}
+        >
           <CardMedia
             component="img"
             height="140"

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { getClients } from '../../services/ServiceApi'; // Importe la fonction pour récupérer les clients
+import React, { useState, useEffect } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { getClients } from "../../services/ServiceApi"; // Importe la fonction pour récupérer les clients
 
 function DataGridClient() {
   const [clients, setClients] = useState([]);
@@ -13,11 +13,11 @@ function DataGridClient() {
     const fetchClients = async () => {
       try {
         const data = await getClients();
-        setClients(data); // Mettre à jour l'état avec les données des clients
+        setClients(data);
       } catch (error) {
-        console.error('Erreur de récupération des clients:', error);
+        console.error("Erreur de récupération des clients:", error);
       } finally {
-        setLoading(false); // Fin du chargement
+        setLoading(false);
       }
     };
 
@@ -25,32 +25,35 @@ function DataGridClient() {
   }, []);
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'email', headerName: 'Email', width: 220 },
+    { field: "id", headerName: "ID", width: 90 },
+    { field: "email", headerName: "Email", width: 220 },
     {
-      field: 'usedStorage',
-      headerName: 'Stockage utilisé (Go)',
+      field: "usedStorage",
+      headerName: "Stockage utilisé (Go)",
       width: 220,
     },
     {
-      field: 'totalStorage',
-      headerName: 'Stockage total (Go)',
+      field: "totalStorage",
+      headerName: "Stockage total (Go)",
       width: 220,
     },
     {
-      field: 'availableStorage',
-      headerName: 'Stockage disponible (Go)',
+      field: "availableStorage",
+      headerName: "Stockage disponible (Go)",
       width: 220,
     },
     {
-      field: 'action',
-      headerName: 'Action',
+      field: "action",
+      headerName: "Action",
       width: 150,
       renderCell: (params) => {
         const clientId = params.row.id;
 
         return (
-          <Link to={`/client-details/${clientId}`} style={{ textDecoration: 'none' }}>
+          <Link
+            to={`/client-details/${clientId}`}
+            style={{ textDecoration: "none" }}
+          >
             <Button variant="contained" color="primary">
               Voir Détails
             </Button>
@@ -66,17 +69,17 @@ function DataGridClient() {
     email: client.email,
     usedStorage: client.usedStorage
       ? `${(client.usedStorage / 1024 / 1024 / 1024).toFixed(2)} Go`
-      : 'N/A',
+      : "N/A",
     totalStorage: client.totalStorage
       ? `${(client.totalStorage / 1024 / 1024 / 1024).toFixed(2)} Go`
-      : 'N/A',
+      : "N/A",
     availableStorage: client.availableStorage
       ? `${(client.availableStorage / 1024 / 1024 / 1024).toFixed(2)} Go`
-      : 'N/A',
+      : "N/A",
   }));
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: "100%" }}>
       {loading ? (
         <p>Chargement des données...</p>
       ) : (

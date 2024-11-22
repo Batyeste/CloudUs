@@ -1,21 +1,63 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Page, Text, View, Document, StyleSheet, PDFViewer, Image } from '@react-pdf/renderer';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  PDFViewer,
+  Image,
+} from "@react-pdf/renderer";
 
 //--- Style global pour la facture
 const styles = StyleSheet.create({
-  page: { padding: 30, backgroundColor: '#FAFAFA', fontFamily: 'Helvetica', fontSize: 12, lineHeight: 1.5, flexDirection: 'column', justifyContent: 'space-between' },
-  header: { marginBottom: 20, textAlign: 'center', fontSize: 24, fontWeight: 'bold', color: '#333' },
-  section: { marginBottom: 20, padding: 10, borderRadius: 4, backgroundColor: '#FFFFFF', border: '1px solid #DDD' },
+  page: {
+    padding: 30,
+    backgroundColor: "#FAFAFA",
+    fontFamily: "Helvetica",
+    fontSize: 12,
+    lineHeight: 1.5,
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  header: {
+    marginBottom: 20,
+    textAlign: "center",
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  section: {
+    marginBottom: 20,
+    padding: 10,
+    borderRadius: 4,
+    backgroundColor: "#FFFFFF",
+    border: "1px solid #DDD",
+  },
   logo: { width: 60, height: 60, marginBottom: 10 },
-  title: { fontSize: 20, marginBottom: 10, fontWeight: 'bold' },
+  title: { fontSize: 20, marginBottom: 10, fontWeight: "bold" },
   text: { marginBottom: 5 },
-  companyDetails: { fontSize: 10, color: '#666', textAlign: 'right' },
-  invoiceDetails: { fontSize: 10, marginTop: 20, textAlign: 'left' },
-  itemTable: { marginTop: 20, borderTop: '1px solid #EEE', borderBottom: '1px solid #EEE' },
-  itemRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8, borderBottom: '1px solid #EEE' },
+  companyDetails: { fontSize: 10, color: "#666", textAlign: "right" },
+  invoiceDetails: { fontSize: 10, marginTop: 20, textAlign: "left" },
+  itemTable: {
+    marginTop: 20,
+    borderTop: "1px solid #EEE",
+    borderBottom: "1px solid #EEE",
+  },
+  itemRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+    borderBottom: "1px solid #EEE",
+  },
   item: { fontSize: 12 },
-  total: { marginTop: 10, textAlign: 'right', fontSize: 14, fontWeight: 'bold' },
+  total: {
+    marginTop: 10,
+    textAlign: "right",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
 });
 
 const MyDocument = ({ formData }) => {
@@ -33,7 +75,7 @@ const MyDocument = ({ formData }) => {
       <Page size="A4" style={styles.page}>
         {/* En tête */}
         <View style={styles.header}>
-          <Image style={styles.logo} src="/img/cloudUs.png" />
+          <Image style={styles.logo} src="/img/logo2.png" />
           <Text>Facture</Text>
         </View>
 
@@ -47,7 +89,9 @@ const MyDocument = ({ formData }) => {
         {/* Détail client */}
         <View style={styles.section}>
           <Text style={styles.title}>Détails du client</Text>
-          <Text style={styles.text}>Nom: {formData.nom} {formData.prenom}</Text>
+          <Text style={styles.text}>
+            Nom: {formData.nom} {formData.prenom}
+          </Text>
           <Text style={styles.text}>Adresse: {formData.adressePostale}</Text>
           <Text style={styles.text}>Téléphone: {formData.tel}</Text>
           <Text style={styles.text}>Email: {formData.email}</Text>
@@ -78,8 +122,12 @@ const MyDocument = ({ formData }) => {
         {/* Info paiement */}
         <View style={styles.section}>
           <Text style={styles.title}>Détails de paiement</Text>
-          <Text style={styles.text}>Méthode de paiement: {formData.paymentMethod}</Text>
-          <Text style={styles.text}>Numéro de carte: **** **** **** {formData.cardNumber.slice(-4)}</Text>
+          <Text style={styles.text}>
+            Méthode de paiement: {formData.paymentMethod}
+          </Text>
+          <Text style={styles.text}>
+            Numéro de carte: **** **** **** {formData.cardNumber.slice(-4)}
+          </Text>
         </View>
 
         {/* p'tit plus */}
@@ -101,8 +149,10 @@ const Facture = () => {
   if (!formData) {
     return (
       <div>
-        <p>Erreur : Aucune donnée disponible. Redirection vers l'inscription...</p>
-        {setTimeout(() => navigate('/'), 3000)}
+        <p>
+          Erreur : Aucune donnée disponible. Redirection vers l'inscription...
+        </p>
+        {setTimeout(() => navigate("/"), 3000)}
       </div>
     );
   }

@@ -1,23 +1,28 @@
-/* Footer.css */
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f8f9fa;
-    text-align: center;
-    padding: 10px 0;
-    z-index: 1000;
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* Footer */
+footer {
+  background-color: #1e1e1e;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  font-size: 14px;
+  color: #d3d4dd;
+  box-shadow: "0 0 10px #ffd080";
+  border: "1px solid #ffd080";
+}
+
+/* Container pour centrer le contenu du footer */
 .container {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 0 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 20px;
 }
 
 p {
-    margin: 0;
-    font-size: 14px;
-    color: #333;
+  margin: 0;
 }
